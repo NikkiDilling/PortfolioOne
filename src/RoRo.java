@@ -23,8 +23,9 @@ public class RoRo extends Vessel{
                    return false;
                }
            }else if(cargoType.toLowerCase().equals("truck")){
-               if(((numberOfCars*carLength) + (numberOfTrucks*truckLength)) + (num * truckLength) <= totalLaneMeters){
+               if(this.loaded + (num * truckLength) <= totalLaneMeters){
                    numberOfTrucks += num;
+                   this.setLoaded();
                    return true;
                }else{
                    return false;
@@ -52,8 +53,8 @@ public class RoRo extends Vessel{
         if(this.loaded == 0){
             return 0;
         }else{
-            double difference = this.totalLaneMeters /this.loaded;
-            return 1.0/difference;
+            double fraction = (double) this.loaded / this.totalLaneMeters;
+            return Math.min(1.0, Math.max(0.0, fraction));
         }
 
     }

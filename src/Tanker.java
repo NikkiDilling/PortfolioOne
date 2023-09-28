@@ -38,15 +38,13 @@ public class Tanker extends Vessel{
             }
         }
         if(compartmentsInUse > 0){
-            return 1/compartmentsInUse;
+            double fraction = (double) compartmentsInUse / 10;
+            return Math.min(1.0, Math.max(0.0, fraction));
         }else{
             return 0;
         }
 
     }
 
-    public String toString(){
-        return " " + this.name + " " + compartments[0].maxCapacity;
-    }
 
 }
