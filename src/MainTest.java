@@ -49,10 +49,17 @@ public class MainTest {
     }
 
     @Test
+    void testRoRoLoadCargoInvalidString(){
+        RoRo roro = new RoRo("Mr.Tanker", 30,100,80, "ru",100);
+        assertEquals(false,roro.loadingCargo("cyckle",5));
+    }
+
+    @Test
     void testRoRoLoadFracionWithCargo(){
         RoRo roro = new RoRo("Mr.Tanker", 30,100,80, "ru",100);
             roro.loadingCargo("truck",5);
-        assertEquals(0.5,roro.loadFraction());
+            roro.loadingCargo("truck",1);
+        assertEquals(60,roro.getLoaded());
     }
 
 

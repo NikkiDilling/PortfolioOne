@@ -1,5 +1,6 @@
 public class RoRo extends Vessel{
     int totalLaneMeters;
+    int loaded;
     int numberOfCars;
     int numberOfTrucks;
     int carLength;
@@ -13,14 +14,15 @@ public class RoRo extends Vessel{
     public boolean loadingCargo(String cargoType, int num){
 
         try{
-           if(cargoType.toLowerCase() == "car"){
-               if(((numberOfCars*carLength) + (numberOfTrucks*truckLength)) + (num * carLength) <= totalLaneMeters){
+           if(cargoType.toLowerCase().equals("car")){
+               if(this.loaded + (num * carLength) <= totalLaneMeters){
                    numberOfCars += num;
+                   this.setLoaded();
                    return true;
                }else{
                    return false;
                }
-           }else if(cargoType.toLowerCase() == "truck"){
+           }else if(cargoType.toLowerCase().equals("truck")){
                if(((numberOfCars*carLength) + (numberOfTrucks*truckLength)) + (num * truckLength) <= totalLaneMeters){
                    numberOfTrucks += num;
                    return true;
@@ -36,11 +38,21 @@ public class RoRo extends Vessel{
             return false;
         }
     }
+
+    public void setLoaded(){
+        this.loaded = (numberOfCars*carLength) + (numberOfTrucks*truckLength);
+    }
+
+    public int getLoaded(){
+        return this.loaded;
+    }
+
+
     public double loadFraction(){
-        if((numberOfCars*carLength + numberOfTrucks*truckLength) == 0){
+        if(this.loaded == 0){
             return 0;
         }else{
-            double difference = totalLaneMeters /(numberOfCars*carLength + numberOfTrucks*truckLength);
+            double difference = this.totalLaneMeters /this.loaded;
             return 1.0/difference;
         }
 
